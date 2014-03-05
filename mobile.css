@@ -1,0 +1,43 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	/*overflow: hidden;*/
+}
+
+.caption {
+	padding: 3px 10px;
+	width: 100%;
+	background-color: rgba(0,0,0,.5);
+	color: rgba(255,255,255,.8);
+
+	position: absolute;
+	bottom: 0;
+}
+
+.container {
+	width: 100%;
+}
+
+.image-head {
+	padding: 0px;
+	width: 100%;
+	background-size: cover;
+}
+
+.text-body {
+	padding: 15px;
+	width: 100%;
+	background-color: #007B55;
+	color: white;
+}
+
+.map-foot {
+	padding: 15px;
+	width: 100%;
+	text-align: center;
+	background-color: #1485CC;
+}
+
+.collapse {
+	display: none;
+}
