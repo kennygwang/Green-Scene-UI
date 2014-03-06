@@ -1,51 +1,44 @@
 var screen_height = $(window).height();
 var dumb_flag = true;
-var dumb_flag2 = false;
-var tempScrollTop;
-
-function stuff(){
-	if (dumb_flag2) {
-		$(window).scrollTop(tempScrollTop);
-		console.log('REVERT TO SCROLL POSITION');
-		dumb_flag2 = !dumb_flag2;
-	}
-	else {
-		dumb_flag2 = !dumb_flag2
-	}
-};
+var thing;
 
 $(document).ready(function(){
 	resize_tweet();
 	$(window).resize(resize_tweet);
 
 	$('.row').click(function(){
-		if (dumb_flag) {
-			tempScrollTop = $(window).scrollTop();
-			console.log('SAVED SCROLL POSITION');
-			dumb_flag = !dumb_flag;
-		}
-		else {
-			dumb_flag = !dumb_flag;
-		}
-
 		$($(this).children()[1]).slideToggle(300);
 		$($(this).children()[2]).slideToggle(300);
 		$('.caption').fadeToggle(300);
-		/*$(this).siblings().slideToggle({
-			'duration' : 300,
-			'progress' : stuff
-		});*/
-		$(this).siblings().slideToggle(300, function(){
-			if (dumb_flag2) {
-				$(window).scrollTop(tempScrollTop);
-				console.log('REVERT TO SCROLL POSITION');
-				dumb_flag2 = !dumb_flag2;
-			}
-			else {
-				dumb_flag2 = !dumb_flag2
-			}
-		});
+		
+		if (dumb_flag) {
+			$('html, body').animate({
+				scrollTop: Math.ceil($('#' + $(this).attr('id')).offset().top) // mathematical rounding errors can cause offset to be inaccurate
+			}, 300);
+			$('html').css('overflow', 'hidden');
+			dumb_flag = !dumb_flag;
+		}
+		else {
+			$('html').css('overflow', 'visible');
+			dumb_flag = !dumb_flag;
+		}
 	});
+/*
+	$('.full-image').each(function(i){
+		//$(this).css('top', 156);
+		var value = ( (screen_height/2) - ($($(this)[0]).height()/2) );
+		$(this).css('top', value);
+		thing = this;
+		console.log($(this)[0]);
+		console.log($(thing).height()/2);
+		console.log(value);
+	});*/
+	
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET","http://unofficial.dailyillini.com/api/v1/tweet/?format=json", true);
+	xmlhttp.send();
+	var json = xmlhttp.responseText;
+	console.log(json);
 });
 
 function resize_tweet() {
@@ -53,4 +46,5 @@ function resize_tweet() {
 	$('.text-body').css('height', screen_height/3);
 	$('.map-foot').css('height', screen_height/3);
 };
+
 
